@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getTitleForLevel } from '$lib/utils/xp';
+  import { Medal, Trophy } from 'lucide-svelte';
 
   let { data } = $props();
 
   const podiumColors = ['from-yellow-400 to-yellow-600', 'from-gray-300 to-gray-500', 'from-orange-400 to-orange-600'];
-  const podiumIcons = ['🥇', '🥈', '🥉'];
 </script>
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -24,7 +24,9 @@
         <div class="w-20 h-20 mx-auto mb-2 rounded-full bg-gradient-to-br {podiumColors[1]} flex items-center justify-center text-dark-900 text-3xl font-bold">
           {data.leaderboard[1].username.charAt(0).toUpperCase()}
         </div>
-        <div class="text-4xl mb-1">{podiumIcons[1]}</div>
+        <div class="flex justify-center mb-1">
+          <Medal class="w-10 h-10 text-gray-400" />
+        </div>
         <div class="text-white font-semibold">{data.leaderboard[1].username}</div>
         <div class="text-neon-green text-sm">{data.leaderboard[1].totalXp} XP</div>
         <div class="bg-dark-700 rounded-lg h-16 w-24 mx-auto mt-2"></div>
@@ -35,7 +37,9 @@
         <div class="w-24 h-24 mx-auto mb-2 rounded-full bg-gradient-to-br {podiumColors[0]} flex items-center justify-center text-dark-900 text-4xl font-bold shadow-lg shadow-yellow-500/30">
           {data.leaderboard[0].username.charAt(0).toUpperCase()}
         </div>
-        <div class="text-5xl mb-1">{podiumIcons[0]}</div>
+        <div class="flex justify-center mb-1">
+          <Trophy class="w-12 h-12 text-yellow-400" />
+        </div>
         <div class="text-white font-bold text-lg">{data.leaderboard[0].username}</div>
         <div class="text-neon-green font-semibold">{data.leaderboard[0].totalXp} XP</div>
         <div class="bg-dark-700 rounded-lg h-24 w-28 mx-auto mt-2"></div>
@@ -46,7 +50,9 @@
         <div class="w-20 h-20 mx-auto mb-2 rounded-full bg-gradient-to-br {podiumColors[2]} flex items-center justify-center text-dark-900 text-3xl font-bold">
           {data.leaderboard[2].username.charAt(0).toUpperCase()}
         </div>
-        <div class="text-4xl mb-1">{podiumIcons[2]}</div>
+        <div class="flex justify-center mb-1">
+          <Medal class="w-10 h-10 text-orange-400" />
+        </div>
         <div class="text-white font-semibold">{data.leaderboard[2].username}</div>
         <div class="text-neon-green text-sm">{data.leaderboard[2].totalXp} XP</div>
         <div class="bg-dark-700 rounded-lg h-12 w-24 mx-auto mt-2"></div>
@@ -87,7 +93,11 @@
           <tr class="border-b border-dark-700 {user.isCurrentUser ? 'bg-neon-cyan/10' : ''} hover:bg-dark-700 transition-colors">
             <td class="py-4">
               {#if user.rank <= 3}
-                <span class="text-2xl">{podiumIcons[user.rank - 1]}</span>
+                {#if user.rank === 1}
+                  <Trophy class="w-6 h-6 text-yellow-400" />
+                {:else}
+                  <Medal class="w-6 h-6 {user.rank === 2 ? 'text-gray-400' : 'text-orange-400'}" />
+                {/if}
               {:else}
                 <span class="text-gray-400 font-semibold">#{user.rank}</span>
               {/if}
@@ -129,7 +139,7 @@
 
     {#if data.leaderboard.length === 0}
       <div class="text-center py-12">
-        <span class="text-4xl mb-4 block">🏆</span>
+        <Trophy class="w-12 h-12 mx-auto mb-4 text-gray-500" />
         <p class="text-gray-400">Aucun joueur pour le moment.</p>
         <p class="text-gray-500 text-sm">Sois le premier!</p>
       </div>

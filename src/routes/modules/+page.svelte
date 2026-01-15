@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getDifficultyStars } from '$lib/utils/xp';
+  import { Shield, Search, KeyRound, Cloud, Wrench, Zap, Package, Monitor, Settings, Trophy, Lock, BookOpen } from 'lucide-svelte';
 
   let { data } = $props();
 
@@ -16,17 +17,17 @@
     challenge: 'from-yellow-500 to-red-500',
   };
 
-  const categoryIcons: Record<string, string> = {
-    protection: '🛡️',
-    analysis: '🔍',
-    crypto: '🔐',
-    obfuscation: '🌫️',
-    patching: '🔧',
-    advanced: '⚡',
-    packing: '📦',
-    virtualization: '🖥️',
-    kernel: '⚙️',
-    challenge: '🏆',
+  const categoryIcons: Record<string, any> = {
+    protection: Shield,
+    analysis: Search,
+    crypto: KeyRound,
+    obfuscation: Cloud,
+    patching: Wrench,
+    advanced: Zap,
+    packing: Package,
+    virtualization: Monitor,
+    kernel: Settings,
+    challenge: Trophy,
   };
 </script>
 
@@ -68,6 +69,7 @@
   <!-- Modules Grid -->
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
     {#each data.modules as mod, i}
+      {@const IconComponent = categoryIcons[mod.category] || BookOpen}
       <a
         href={mod.unlocked ? `/modules/${mod.slug}` : '#'}
         class="card module-card group {!mod.unlocked ? 'opacity-60 cursor-not-allowed' : 'hover:border-neon-cyan'}"
@@ -78,7 +80,9 @@
             <div class="w-8 h-8 rounded-full bg-gradient-to-br {categoryColors[mod.category] || 'from-gray-400 to-gray-600'} flex items-center justify-center text-white text-sm font-bold">
               {i + 1}
             </div>
-            <span class="text-lg">{categoryIcons[mod.category] || '📚'}</span>
+            <div class="w-8 h-8 rounded-lg bg-dark-600 flex items-center justify-center">
+              <IconComponent class="w-4 h-4 text-gray-300" />
+            </div>
           </div>
 
           {#if mod.progress === 100}
@@ -87,7 +91,7 @@
             </span>
           {:else if !mod.unlocked}
             <span class="px-2 py-1 rounded-full bg-gray-500/20 text-gray-400 text-xs font-semibold flex items-center">
-              <span class="mr-1">🔒</span> {mod.requiredXp} XP
+              <Lock class="w-3 h-3 mr-1" /> {mod.requiredXp} XP
             </span>
           {:else if mod.completed > 0}
             <span class="px-2 py-1 rounded-full bg-neon-cyan/20 text-neon-cyan text-xs font-semibold">

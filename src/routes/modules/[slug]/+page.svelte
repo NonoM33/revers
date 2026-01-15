@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getDifficultyStars } from '$lib/utils/xp';
+  import { ChevronLeft, Check, Lock, Award, Lightbulb } from 'lucide-svelte';
 
   let { data } = $props();
 
@@ -9,9 +10,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Back button -->
   <a href="/modules" class="text-gray-400 hover:text-neon-cyan transition-colors mb-6 inline-flex items-center">
-    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-    </svg>
+    <ChevronLeft class="w-5 h-5 mr-1" />
     Retour aux modules
   </a>
 
@@ -54,9 +53,9 @@
         <span class="text-neon-green font-semibold ml-1">{mod.xpReward} XP</span>
       </div>
       {#if mod.badgeSlug}
-        <div class="px-3 py-1 rounded-full bg-dark-600">
+        <div class="px-3 py-1 rounded-full bg-dark-600 flex items-center">
           <span class="text-gray-400">Badge:</span>
-          <span class="text-neon-purple font-semibold ml-1">🏅</span>
+          <Award class="w-4 h-4 ml-1 text-neon-purple" />
         </div>
       {/if}
     </div>
@@ -65,7 +64,7 @@
   {#if !data.isUnlocked}
     <!-- Locked message -->
     <div class="card text-center py-12 mb-8">
-      <span class="text-6xl mb-4 block">🔒</span>
+      <Lock class="w-16 h-16 mx-auto mb-4 text-gray-500" />
       <h2 class="text-xl font-bold text-white mb-2">Module verrouille</h2>
       <p class="text-gray-400 mb-4">
         Tu as besoin de <span class="text-neon-green font-bold">{mod.requiredXp} XP</span> pour debloquer ce module.
@@ -90,9 +89,7 @@
                 <!-- Status indicator -->
                 <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 {exercise.completed ? 'bg-neon-green/20 text-neon-green' : 'bg-dark-600 text-gray-400'}">
                   {#if exercise.completed}
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
+                    <Check class="w-6 h-6" />
                   {:else}
                     <span class="font-bold">{i + 1}</span>
                   {/if}
@@ -116,8 +113,8 @@
                       {'★'.repeat(exercise.difficulty)}{'☆'.repeat(5 - exercise.difficulty)}
                     </span>
                     {#if exercise.hints.length > 0}
-                      <span class="px-2 py-0.5 rounded text-xs bg-dark-600 text-gray-400">
-                        💡 {exercise.hints.length} indices
+                      <span class="px-2 py-0.5 rounded text-xs bg-dark-600 text-gray-400 flex items-center">
+                        <Lightbulb class="w-3 h-3 mr-1" /> {exercise.hints.length} indices
                       </span>
                     {/if}
                   </div>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getTitleForLevel, progressToNextLevel, totalXpForLevel, RARITY_BG_COLORS } from '$lib/utils/xp';
+  import { BookOpen, Clock, Award, BarChart3, Zap, Check, Lock, ArrowRight } from 'lucide-svelte';
 
   let { data } = $props();
 
@@ -66,7 +67,7 @@
       <!-- Module Progress -->
       <section>
         <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-          <span class="mr-2">📚</span> Progression des modules
+          <BookOpen class="w-5 h-5 mr-2 text-neon-cyan" /> Progression des modules
         </h2>
         <div class="space-y-4">
           {#each data.moduleProgress.slice(0, 6) as mod}
@@ -75,9 +76,9 @@
                 <div class="flex items-center space-x-4">
                   <div class="w-10 h-10 rounded-lg bg-dark-600 flex items-center justify-center">
                     {#if mod.progress === 100}
-                      <span class="text-neon-green text-xl">✓</span>
+                      <Check class="w-5 h-5 text-neon-green" />
                     {:else if !mod.unlocked}
-                      <span class="text-gray-500 text-xl">🔒</span>
+                      <Lock class="w-5 h-5 text-gray-500" />
                     {:else}
                       <span class="text-white font-bold">{mod.difficulty}</span>
                     {/if}
@@ -101,8 +102,8 @@
             </div>
           {/each}
 
-          <a href="/modules" class="block text-center text-neon-cyan hover:underline py-2">
-            Voir tous les modules →
+          <a href="/modules" class="block text-center text-neon-cyan hover:underline py-2 flex items-center justify-center">
+            Voir tous les modules <ArrowRight class="w-4 h-4 ml-1" />
           </a>
         </div>
       </section>
@@ -110,7 +111,7 @@
       <!-- Recent Activity -->
       <section>
         <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-          <span class="mr-2">🕐</span> Activite recente
+          <Clock class="w-5 h-5 mr-2 text-neon-cyan" /> Activite recente
         </h2>
 
         {#if data.recentCompletions.length > 0}
@@ -118,7 +119,7 @@
             {#each data.recentCompletions as completion}
               <div class="card py-3 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                  <span class="text-neon-green">✓</span>
+                  <Check class="w-5 h-5 text-neon-green" />
                   <div>
                     <p class="text-white font-medium">{completion.exercise.title}</p>
                     <p class="text-sm text-gray-400">{completion.exercise.module.title}</p>
@@ -149,7 +150,7 @@
       <!-- Badges -->
       <section>
         <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-          <span class="mr-2">🏅</span> Badges ({data.badges.length})
+          <Award class="w-5 h-5 mr-2 text-neon-cyan" /> Badges ({data.badges.length})
         </h2>
 
         {#if data.badges.length > 0}
@@ -159,19 +160,19 @@
                 class="aspect-square rounded-lg border flex flex-col items-center justify-center p-2 badge-{userBadge.badge.rarity.toLowerCase()}"
                 title={userBadge.badge.description}
               >
-                <span class="text-2xl mb-1">🏅</span>
+                <Award class="w-6 h-6 mb-1" />
                 <span class="text-xs text-center truncate w-full">{userBadge.badge.name}</span>
               </div>
             {/each}
           </div>
           {#if data.badges.length > 9}
-            <a href="/profile" class="block text-center text-neon-cyan hover:underline py-2 text-sm">
-              Voir tous les badges →
+            <a href="/profile" class="block text-center text-neon-cyan hover:underline py-2 text-sm flex items-center justify-center">
+              Voir tous les badges <ArrowRight class="w-4 h-4 ml-1" />
             </a>
           {/if}
         {:else}
           <div class="card text-center py-6">
-            <span class="text-4xl mb-2 block opacity-50">🏅</span>
+            <Award class="w-12 h-12 mx-auto mb-2 opacity-50 text-gray-500" />
             <p class="text-gray-400 text-sm">Aucun badge pour le moment</p>
             <p class="text-gray-500 text-xs">Complete des modules pour debloquer des badges!</p>
           </div>
@@ -181,7 +182,7 @@
       <!-- Stats Card -->
       <section>
         <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-          <span class="mr-2">📊</span> Statistiques
+          <BarChart3 class="w-5 h-5 mr-2 text-neon-cyan" /> Statistiques
         </h2>
 
         <div class="card space-y-4">
@@ -207,7 +208,7 @@
       <!-- Quick Actions -->
       <section>
         <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-          <span class="mr-2">⚡</span> Actions rapides
+          <Zap class="w-5 h-5 mr-2 text-neon-cyan" /> Actions rapides
         </h2>
 
         <div class="space-y-3">

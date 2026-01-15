@@ -1,24 +1,26 @@
 <script lang="ts">
+  import { Target, Trophy, Code2, Unlock, Microscope, Bug, Monitor, ArrowRight, ChevronRight } from 'lucide-svelte';
+
   const exampleFlag = "FLAG{BYPASS_SUCCESS_a1b2c3}";
 
   const features = [
     {
-      icon: '🎯',
+      icon: Target,
       title: '16 Modules Progressifs',
       description: 'Du debutant a l\'expert, maitrise chaque technique de reverse engineering.'
     },
     {
-      icon: '🏆',
+      icon: Trophy,
       title: 'Gamification Complete',
       description: 'XP, niveaux, badges, streaks et leaderboard pour rester motive.'
     },
     {
-      icon: '💻',
+      icon: Code2,
       title: 'Exercices Pratiques',
       description: 'Des binaires reels a analyser avec Binary Ninja et LLDB.'
     },
     {
-      icon: '🔓',
+      icon: Unlock,
       title: 'Validation Immediate',
       description: 'Soumets tes flags et obtiens des feedbacks instantanes.'
     }
@@ -69,9 +71,7 @@
           class="btn btn-primary text-lg px-8 py-4 inline-flex items-center justify-center"
         >
           Commencer l'aventure
-          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
+          <ArrowRight class="w-5 h-5 ml-2" />
         </a>
         <a
           href="/leaderboard"
@@ -119,7 +119,9 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each features as feature}
         <div class="card group">
-          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">{feature.icon}</div>
+          <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-neon-green/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <feature.icon class="w-6 h-6 text-neon-cyan" />
+          </div>
           <h3 class="text-xl font-semibold text-white mb-2">{feature.title}</h3>
           <p class="text-gray-400">{feature.description}</p>
         </div>
@@ -163,9 +165,7 @@
     <div class="text-center mt-12">
       <a href="/modules" class="btn btn-secondary inline-flex items-center">
         Voir tous les modules
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+        <ChevronRight class="w-5 h-5 ml-2" />
       </a>
     </div>
   </div>
@@ -186,7 +186,7 @@
         <div class="space-y-4">
           <div class="flex items-center space-x-4">
             <div class="w-12 h-12 rounded-lg bg-dark-600 flex items-center justify-center">
-              <span class="text-2xl">🔬</span>
+              <Microscope class="w-6 h-6 text-neon-cyan" />
             </div>
             <div>
               <div class="font-semibold text-white">Binary Ninja</div>
@@ -196,7 +196,7 @@
 
           <div class="flex items-center space-x-4">
             <div class="w-12 h-12 rounded-lg bg-dark-600 flex items-center justify-center">
-              <span class="text-2xl">🐛</span>
+              <Bug class="w-6 h-6 text-neon-green" />
             </div>
             <div>
               <div class="font-semibold text-white">LLDB</div>
@@ -206,7 +206,7 @@
 
           <div class="flex items-center space-x-4">
             <div class="w-12 h-12 rounded-lg bg-dark-600 flex items-center justify-center">
-              <span class="text-2xl">🖥️</span>
+              <Monitor class="w-6 h-6 text-neon-purple" />
             </div>
             <div>
               <div class="font-semibold text-white">macOS / ARM64</div>
@@ -246,9 +246,7 @@
       </p>
       <a href="/login" class="btn btn-primary text-lg px-8 py-4 inline-flex items-center">
         Creer mon compte
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-        </svg>
+        <ArrowRight class="w-5 h-5 ml-2" />
       </a>
     </div>
   </div>

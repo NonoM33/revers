@@ -1,14 +1,15 @@
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/stores';
+  import { Home, LayoutDashboard, BookOpen, Trophy, Unlock, Menu, X, LogIn } from 'lucide-svelte';
 
   let { children, data } = $props();
 
   const navItems = [
-    { href: '/', label: 'Accueil', icon: '🏠' },
-    { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { href: '/modules', label: 'Modules', icon: '📚' },
-    { href: '/leaderboard', label: 'Classement', icon: '🏆' },
+    { href: '/', label: 'Accueil', icon: Home },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/modules', label: 'Modules', icon: BookOpen },
+    { href: '/leaderboard', label: 'Classement', icon: Trophy },
   ];
 
   let isMenuOpen = $state(false);
@@ -26,7 +27,7 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <a href="/" class="flex items-center space-x-3">
-          <span class="text-2xl">🔓</span>
+          <Unlock class="w-7 h-7 text-neon-cyan" />
           <span class="text-xl font-bold bg-gradient-to-r from-neon-cyan to-neon-green bg-clip-text text-transparent">
             REverse Academy
           </span>
@@ -37,11 +38,11 @@
           {#each navItems as item}
             <a
               href={item.href}
-              class="px-4 py-2 rounded-lg transition-all duration-200 {$page.url.pathname === item.href
+              class="px-4 py-2 rounded-lg transition-all duration-200 flex items-center {$page.url.pathname === item.href
                 ? 'bg-dark-600 text-neon-cyan'
                 : 'text-gray-300 hover:bg-dark-700 hover:text-white'}"
             >
-              <span class="mr-2">{item.icon}</span>
+              <item.icon class="w-4 h-4 mr-2" />
               {item.label}
             </a>
           {/each}
@@ -63,7 +64,8 @@
               </a>
             </div>
           {:else}
-            <a href="/login" class="btn btn-primary">
+            <a href="/login" class="btn btn-primary flex items-center">
+              <LogIn class="w-4 h-4 mr-2" />
               Connexion
             </a>
           {/if}
@@ -74,13 +76,11 @@
           class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-700"
           onclick={() => (isMenuOpen = !isMenuOpen)}
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {#if isMenuOpen}
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            {:else}
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            {/if}
-          </svg>
+          {#if isMenuOpen}
+            <X class="w-6 h-6" />
+          {:else}
+            <Menu class="w-6 h-6" />
+          {/if}
         </button>
       </div>
     </div>
@@ -92,21 +92,22 @@
           {#each navItems as item}
             <a
               href={item.href}
-              class="block px-4 py-2 rounded-lg transition-all {$page.url.pathname === item.href
+              class="flex items-center px-4 py-2 rounded-lg transition-all {$page.url.pathname === item.href
                 ? 'bg-dark-600 text-neon-cyan'
                 : 'text-gray-300 hover:bg-dark-700'}"
               onclick={() => (isMenuOpen = false)}
             >
-              <span class="mr-2">{item.icon}</span>
+              <item.icon class="w-4 h-4 mr-2" />
               {item.label}
             </a>
           {/each}
           {#if !data?.user}
             <a
               href="/login"
-              class="block px-4 py-2 rounded-lg bg-neon-green text-dark-900 font-semibold text-center"
+              class="flex items-center justify-center px-4 py-2 rounded-lg bg-neon-green text-dark-900 font-semibold"
               onclick={() => (isMenuOpen = false)}
             >
+              <LogIn class="w-4 h-4 mr-2" />
               Connexion
             </a>
           {/if}
@@ -125,7 +126,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="flex items-center space-x-2 mb-4 md:mb-0">
-          <span class="text-xl">🔓</span>
+          <Unlock class="w-5 h-5 text-neon-cyan" />
           <span class="text-lg font-bold text-gray-300">REverse Academy</span>
         </div>
         <p class="text-gray-500 text-sm">

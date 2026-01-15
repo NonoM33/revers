@@ -2,6 +2,7 @@
   import { enhance } from '$app/forms';
   import { getDifficultyStars } from '$lib/utils/xp';
   import { marked } from 'marked';
+  import { ChevronLeft, Check, Lock, Download, Apple, Cpu, Lightbulb, Flag, PartyPopper, Loader2, ArrowRight, BookOpen, Target, ChevronRight } from 'lucide-svelte';
 
   let { data, form } = $props();
 
@@ -29,9 +30,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Back button -->
   <a href="/modules/{exercise.module.slug}" class="text-gray-400 hover:text-neon-cyan transition-colors mb-6 inline-flex items-center">
-    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-    </svg>
+    <ChevronLeft class="w-5 h-5 mr-1" />
     Retour a {exercise.module.title}
   </a>
 
@@ -41,8 +40,8 @@
       <div>
         <div class="flex items-center space-x-3 mb-2">
           {#if data.isCompleted}
-            <span class="px-3 py-1 rounded-full bg-neon-green/20 text-neon-green text-sm font-semibold">
-              ✓ Complete
+            <span class="px-3 py-1 rounded-full bg-neon-green/20 text-neon-green text-sm font-semibold flex items-center">
+              <Check class="w-4 h-4 mr-1" /> Complete
             </span>
           {/if}
           <span class="text-yellow-400 text-sm">
@@ -77,7 +76,7 @@
   {#if !data.isUnlocked}
     <!-- Locked message -->
     <div class="card text-center py-12">
-      <span class="text-6xl mb-4 block">🔒</span>
+      <Lock class="w-16 h-16 mx-auto mb-4 text-gray-500" />
       <h2 class="text-xl font-bold text-white mb-2">Exercice verrouille</h2>
       <p class="text-gray-400">
         Debloque d'abord le module "{exercise.module.title}".
@@ -89,19 +88,19 @@
       <div class="flex space-x-2 mb-8">
         <button
           onclick={() => activeTab = 'theory'}
-          class="px-6 py-3 rounded-lg font-semibold transition-all {activeTab === 'theory'
+          class="px-6 py-3 rounded-lg font-semibold transition-all flex items-center {activeTab === 'theory'
             ? 'bg-neon-cyan text-dark-900'
             : 'bg-dark-700 text-gray-300 hover:bg-dark-600'}"
         >
-          📚 Theorie
+          <BookOpen class="w-5 h-5 mr-2" /> Theorie
         </button>
         <button
           onclick={() => activeTab = 'practice'}
-          class="px-6 py-3 rounded-lg font-semibold transition-all {activeTab === 'practice'
+          class="px-6 py-3 rounded-lg font-semibold transition-all flex items-center {activeTab === 'practice'
             ? 'bg-neon-green text-dark-900'
             : 'bg-dark-700 text-gray-300 hover:bg-dark-600'}"
         >
-          🎯 Pratique
+          <Target class="w-5 h-5 mr-2" /> Pratique
         </button>
       </div>
     {/if}
@@ -114,9 +113,9 @@
       <div class="text-center mb-8">
         <button
           onclick={() => activeTab = 'practice'}
-          class="btn btn-primary text-lg px-8 py-4"
+          class="btn btn-primary text-lg px-8 py-4 inline-flex items-center"
         >
-          Passer a la pratique →
+          Passer a la pratique <ArrowRight class="w-5 h-5 ml-2" />
         </button>
       </div>
     {/if}
@@ -129,7 +128,7 @@
         <!-- Download section -->
         <section class="card">
           <h2 class="text-lg font-bold text-white mb-4 flex items-center">
-            <span class="mr-2">📥</span> Telecharger le binaire
+            <Download class="w-5 h-5 mr-2 text-neon-cyan" /> Telecharger le binaire
           </h2>
 
           {#if exercise.binaryPath}
@@ -139,14 +138,14 @@
                 download
                 class="btn btn-primary w-full text-center flex items-center justify-center"
               >
-                <span class="mr-2">🍎</span> macOS ARM64 (M1/M2/M3)
+                <Apple class="w-5 h-5 mr-2" /> macOS ARM64 (M1/M2/M3)
               </a>
               <a
                 href="{exercise.binaryPath}_x86_64"
                 download
                 class="btn btn-secondary w-full text-center flex items-center justify-center"
               >
-                <span class="mr-2">💻</span> macOS Intel (x86_64)
+                <Cpu class="w-5 h-5 mr-2" /> macOS Intel (x86_64)
               </a>
             </div>
           {:else}
@@ -159,7 +158,7 @@
         <!-- Hints section -->
         <section class="card">
           <h2 class="text-lg font-bold text-white mb-4 flex items-center">
-            <span class="mr-2">💡</span> Indices ({hintsRevealed}/{exercise.hints.length})
+            <Lightbulb class="w-5 h-5 mr-2 text-yellow-400" /> Indices ({hintsRevealed}/{exercise.hints.length})
           </h2>
 
           {#if exercise.hints.length > 0}
@@ -173,7 +172,9 @@
                 {:else}
                   <div class="p-3 rounded-lg bg-dark-700 border border-dark-500 opacity-50">
                     <div class="text-xs text-gray-500 mb-1">Indice {i + 1}</div>
-                    <p class="text-gray-500 italic">Verrouille</p>
+                    <p class="text-gray-500 italic flex items-center">
+                      <Lock class="w-3 h-3 mr-1" /> Verrouille
+                    </p>
                   </div>
                 {/if}
               {/each}
@@ -199,23 +200,23 @@
       <div>
         <section class="card">
           <h2 class="text-lg font-bold text-white mb-4 flex items-center">
-            <span class="mr-2">🚩</span> Soumettre le flag
+            <Flag class="w-5 h-5 mr-2 text-neon-green" /> Soumettre le flag
           </h2>
 
           {#if data.isCompleted}
             <div class="text-center py-8">
-              <span class="text-6xl mb-4 block">🎉</span>
+              <PartyPopper class="w-16 h-16 mx-auto mb-4 text-neon-green" />
               <h3 class="text-xl font-bold text-neon-green mb-2">Exercice complete!</h3>
               <p class="text-gray-400">Tu as deja resolu cet exercice.</p>
             </div>
           {:else if form?.success}
             <div class="text-center py-8">
-              <span class="text-6xl mb-4 block">🎉</span>
+              <PartyPopper class="w-16 h-16 mx-auto mb-4 text-neon-green" />
               <h3 class="text-xl font-bold text-neon-green mb-2">Bravo!</h3>
               <p class="text-gray-400 mb-2">Flag correct!</p>
               <p class="text-neon-green text-2xl font-bold">+{form.xpEarned} XP</p>
               {#if form.isFirstBlood}
-                <p class="text-yellow-400 text-sm mt-2">🩸 First Blood!</p>
+                <p class="text-yellow-400 text-sm mt-2">First Blood!</p>
               {/if}
             </div>
           {:else}
@@ -257,10 +258,7 @@
               >
                 {#if loading}
                   <span class="inline-flex items-center">
-                    <svg class="animate-spin -ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <Loader2 class="w-5 h-5 mr-2 animate-spin" />
                     Verification...
                   </span>
                 {:else}
@@ -290,15 +288,15 @@
           <h3 class="text-sm font-semibold text-gray-400 mb-3">Conseils</h3>
           <ul class="text-sm text-gray-400 space-y-2">
             <li class="flex items-start">
-              <span class="text-neon-cyan mr-2">→</span>
+              <ChevronRight class="w-4 h-4 mr-1 text-neon-cyan shrink-0 mt-0.5" />
               Ouvre le binaire dans Binary Ninja pour l'analyse statique
             </li>
             <li class="flex items-start">
-              <span class="text-neon-cyan mr-2">→</span>
+              <ChevronRight class="w-4 h-4 mr-1 text-neon-cyan shrink-0 mt-0.5" />
               Utilise LLDB pour l'analyse dynamique et les breakpoints
             </li>
             <li class="flex items-start">
-              <span class="text-neon-cyan mr-2">→</span>
+              <ChevronRight class="w-4 h-4 mr-1 text-neon-cyan shrink-0 mt-0.5" />
               Le flag a le format FLAG...
             </li>
           </ul>

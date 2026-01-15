@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Unlock, ArrowLeft } from 'lucide-svelte';
+
   let { data } = $props();
 </script>
 
@@ -7,7 +9,7 @@
     <!-- Logo -->
     <div class="text-center mb-8">
       <a href="/" class="inline-flex items-center space-x-3">
-        <span class="text-4xl">🔓</span>
+        <Unlock class="w-10 h-10 text-neon-cyan" />
         <span class="text-2xl font-bold bg-gradient-to-r from-neon-cyan to-neon-green bg-clip-text text-transparent">
           REverse Academy
         </span>
@@ -74,8 +76,8 @@
 
     <!-- Back to home -->
     <div class="text-center mt-6">
-      <a href="/" class="text-gray-400 hover:text-neon-cyan transition-colors">
-        ← Retour a l'accueil
+      <a href="/" class="text-gray-400 hover:text-neon-cyan transition-colors inline-flex items-center">
+        <ArrowLeft class="w-4 h-4 mr-1" /> Retour a l'accueil
       </a>
     </div>
   </div>
