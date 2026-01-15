@@ -14,6 +14,13 @@ RUN npx prisma generate
 COPY . .
 RUN npm run build
 
+# Initialize database with seed data during build
+RUN mkdir -p /app/data
+ENV DATABASE_URL="file:/app/data/reverse_academy.db"
+RUN npx prisma db push
+RUN npx tsx prisma/seed.ts
+RUN npx tsx prisma/add-lessons.ts
+
 # Production image
 FROM node:20-alpine AS runner
 
@@ -23,24 +30,24 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 sveltekit
 
-# Copy built application
+# Copy built application and pre-seeded database
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/static ./static
+COPY --from=builder /app/data ./data
 
 # Set environment
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV DATABASE_URL="file:/app/data/reverse_academy.db"
 
-# Create data directory for SQLite
-RUN mkdir -p /app/data && chown -R sveltekit:nodejs /app/data
+# Ensure data directory is writable
+RUN chown -R sveltekit:nodejs /app/data
 
 USER sveltekit
 
 EXPOSE 3000
 
-# Initialize database and start
-CMD npx prisma db push && node build
+CMD ["node", "build"]
