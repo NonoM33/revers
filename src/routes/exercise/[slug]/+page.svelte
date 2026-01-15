@@ -1,19 +1,29 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { getDifficultyStars } from '$lib/utils/xp';
+  import { marked } from 'marked';
 
   let { data, form } = $props();
 
-  const exercise = data.exercise;
-  let hintsRevealed = $state(data.hintsRevealed);
+  let exercise = $derived(data.exercise);
+  let initialHints = $derived(data.hintsRevealed);
+  let additionalHintsRevealed = $state(0);
+  let hintsRevealed = $derived(initialHints + additionalHintsRevealed);
   let loading = $state(false);
   let showSuccess = $state(false);
 
+  // Tabs: theory vs practice
+  let hasTheory = $derived(!!exercise.theory);
+  let activeTab = $state<'theory' | 'practice'>('theory');
+
   function revealHint() {
     if (hintsRevealed < exercise.hints.length) {
-      hintsRevealed++;
+      additionalHintsRevealed++;
     }
   }
+
+  // Parse markdown for theory
+  let theoryHtml = $derived(exercise.theory ? marked(exercise.theory) : '');
 </script>
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -74,6 +84,45 @@
       </p>
     </div>
   {:else}
+    <!-- Tabs -->
+    {#if hasTheory}
+      <div class="flex space-x-2 mb-8">
+        <button
+          onclick={() => activeTab = 'theory'}
+          class="px-6 py-3 rounded-lg font-semibold transition-all {activeTab === 'theory'
+            ? 'bg-neon-cyan text-dark-900'
+            : 'bg-dark-700 text-gray-300 hover:bg-dark-600'}"
+        >
+          📚 Theorie
+        </button>
+        <button
+          onclick={() => activeTab = 'practice'}
+          class="px-6 py-3 rounded-lg font-semibold transition-all {activeTab === 'practice'
+            ? 'bg-neon-green text-dark-900'
+            : 'bg-dark-700 text-gray-300 hover:bg-dark-600'}"
+        >
+          🎯 Pratique
+        </button>
+      </div>
+    {/if}
+
+    <!-- Theory Tab -->
+    {#if activeTab === 'theory' && hasTheory}
+      <div class="card prose prose-invert prose-cyan max-w-none mb-8">
+        {@html theoryHtml}
+      </div>
+      <div class="text-center mb-8">
+        <button
+          onclick={() => activeTab = 'practice'}
+          class="btn btn-primary text-lg px-8 py-4"
+        >
+          Passer a la pratique →
+        </button>
+      </div>
+    {/if}
+
+    <!-- Practice Tab -->
+    {#if activeTab === 'practice'}
     <div class="grid lg:grid-cols-2 gap-8">
       <!-- Left: Download and hints -->
       <div class="space-y-6">
@@ -256,5 +305,6 @@
         </div>
       </div>
     </div>
+    {/if}
   {/if}
 </div>

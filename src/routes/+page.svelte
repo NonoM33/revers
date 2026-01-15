@@ -1,4 +1,6 @@
 <script lang="ts">
+  const exampleFlag = "FLAG{BYPASS_SUCCESS_a1b2c3}";
+
   const features = [
     {
       icon: '🎯',
@@ -225,7 +227,7 @@
           <div class="text-gray-400">Process launched...</div>
           <div><span class="text-neon-cyan">(lldb)</span> register write eax 1</div>
           <div><span class="text-neon-cyan">(lldb)</span> c</div>
-          <div class="text-neon-green mt-2">FLAG{BYPASS_SUCCESS_a1b2c3}</div>
+          <div class="text-neon-green mt-2">{exampleFlag}</div>
         </div>
       </div>
     </div>

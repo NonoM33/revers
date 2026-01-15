@@ -72,6 +72,9 @@ model Exercise {
   description     String
   hints           String    @default("[]") // JSON array
 
+  // Contenu theorique (Markdown)
+  theory          String    @default("")
+
   difficulty      Int
   orderIndex      Int
 
