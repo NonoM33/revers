@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+/* Custom theme - Dark with neon accents */
+@theme {
+  --color-neon-green: #00ff88;
+  --color-neon-cyan: #00d4ff;
+  --color-neon-purple: #a855f7;
+  --color-neon-pink: #ff00ff;
+
+  --color-dark-900: #0a0a0f;
+  --color-dark-800: #12121a;
+  --color-dark-700: #1a1a25;
+  --color-dark-600: #252532;
+  --color-dark-500: #32324a;
+
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+
+  /* Rarity colors for badges */
+  --color-rarity-common: #9ca3af;
+  --color-rarity-uncommon: #22c55e;
+  --color-rarity-rare: #3b82f6;
+  --color-rarity-epic: #a855f7;
+  --color-rarity-legendary: #f59e0b;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-dark-900);
+  color: #f3f4f6;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Neon glow effects */
+.neon-text {
+  text-shadow: 0 0 10px var(--color-neon-green), 0 0 20px var(--color-neon-green);
+}
+
+.neon-border {
+  box-shadow: 0 0 5px var(--color-neon-cyan), inset 0 0 5px var(--color-neon-cyan);
+}
+
+/* Card styles */
+.card {
+  background-color: var(--color-dark-800);
+  border: 1px solid var(--color-dark-600);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  border-color: var(--color-neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+/* Button styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--color-neon-green);
+  color: var(--color-dark-900);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px var(--color-neon-green);
+}
+
+.btn-secondary {
+  background-color: var(--color-dark-600);
+  color: #f3f4f6;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-dark-500);
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 0.75rem;
+  background-color: var(--color-dark-600);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-neon-cyan), var(--color-neon-green));
+  transition: all 0.5s;
+}
+
+/* Badge styles based on rarity */
+.badge-common {
+  background-color: rgba(156, 163, 175, 0.2);
+  border: 1px solid var(--color-rarity-common);
+  color: var(--color-rarity-common);
+}
+
+.badge-uncommon {
+  background-color: rgba(34, 197, 94, 0.2);
+  border: 1px solid var(--color-rarity-uncommon);
+  color: var(--color-rarity-uncommon);
+}
+
+.badge-rare {
+  background-color: rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--color-rarity-rare);
+  color: var(--color-rarity-rare);
+}
+
+.badge-epic {
+  background-color: rgba(168, 85, 247, 0.2);
+  border: 1px solid var(--color-rarity-epic);
+  color: var(--color-rarity-epic);
+  animation: pulse-epic 2s ease-in-out infinite;
+}
+
+.badge-legendary {
+  background-color: rgba(245, 158, 11, 0.2);
+  border: 1px solid var(--color-rarity-legendary);
+  color: var(--color-rarity-legendary);
+  animation: glow-legendary 2s ease-in-out infinite;
+}
+
+@keyframes pulse-epic {
+  0%, 100% { box-shadow: 0 0 5px var(--color-rarity-epic); }
+  50% { box-shadow: 0 0 15px var(--color-rarity-epic); }
+}
+
+@keyframes glow-legendary {
+  0%, 100% { box-shadow: 0 0 10px var(--color-rarity-legendary); }
+  50% { box-shadow: 0 0 25px var(--color-rarity-legendary), 0 0 35px var(--color-rarity-legendary); }
+}
+
+/* Difficulty stars */
+.difficulty-star {
+  color: #facc15;
+}
+
+.difficulty-star-empty {
+  color: var(--color-dark-500);
+}
+
+/* Module card specific */
+.module-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background: linear-gradient(to right, var(--color-neon-cyan), var(--color-neon-green));
+}
+
+.module-locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* XP animations */
+@keyframes xp-gain {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+}
+
+.xp-popup {
+  animation: xp-gain 1s ease-out forwards;
+  color: var(--color-neon-green);
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Level up effect */
+@keyframes level-up {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.level-up-animation {
+  animation: level-up 0.5s ease-out;
+}
+
+/* Streak fire effect */
+.streak-fire {
+  background: linear-gradient(to top, #ff6b00, #ffaa00, #ffdd00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fire-flicker 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes fire-flicker {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.2); }
+}
+
+/* Terminal-like text for exercise descriptions */
+.terminal-text {
+  font-family: ui-monospace, monospace;
+  color: var(--color-neon-green);
+  background-color: var(--color-dark-900);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-dark-600);
+}
+
+/* Flag submission input */
+.flag-input {
+  width: 100%;
+  background-color: var(--color-dark-700);
+  border: 2px solid var(--color-dark-500);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-family: ui-monospace, monospace;
+  font-size: 1.125rem;
+  color: #f3f4f6;
+}
+
+.flag-input:focus {
+  border-color: var(--color-neon-cyan);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-dark-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-dark-500);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-dark-400);
+}

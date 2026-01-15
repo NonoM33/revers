@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ══════════════════════════════════════════════════════════════
+// UTILISATEURS
+// ══════════════════════════════════════════════════════════════
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  username      String    @unique
+
+  // Gamification
+  totalXp       Int       @default(0)
+  level         Int       @default(1)
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastActiveAt  DateTime?
+
+  // Relations
+  completedExercises CompletedExercise[]
+  unlockedBadges     UserBadge[]
+  submissions        Submission[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ══════════════════════════════════════════════════════════════
+// MODULES D'APPRENTISSAGE
+// ══════════════════════════════════════════════════════════════
+
+model Module {
+  id            String     @id @default(uuid())
+  slug          String     @unique
+  title         String
+  description   String
+  category      String
+  difficulty    Int
+  orderIndex    Int
+
+  // Pre-requis XP
+  requiredXp    Int        @default(0)
+
+  // Recompenses
+  xpReward      Int        @default(100)
+  badgeSlug     String?
+
+  exercises     Exercise[]
+
+  createdAt     DateTime   @default(now())
+}
+
+// ══════════════════════════════════════════════════════════════
+// EXERCICES
+// ══════════════════════════════════════════════════════════════
+
+model Exercise {
+  id              String    @id @default(uuid())
+  moduleId        String
+  module          Module    @relation(fields: [moduleId], references: [id])
+
+  slug            String    @unique
+  title           String
+  description     String
+  hints           String    @default("[]") // JSON array
+
+  difficulty      Int
+  orderIndex      Int
+
+  // Fichiers
+  binaryPath      String?
+  sourcePath      String?
+
+  // Validation
+  validationType  String    @default("FLAG") // FLAG, AUTO_PATCH, KEYGEN, MULTI_FLAG
+  expectedFlag    String?   // Hash SHA256 du flag
+
+  // Recompenses
+  xpReward        Int       @default(50)
+  bonusXp         Int       @default(25)
+
+  // Stats
+  totalAttempts   Int       @default(0)
+  totalSolves     Int       @default(0)
+
+  completions     CompletedExercise[]
+  submissions     Submission[]
+
+  createdAt       DateTime  @default(now())
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROGRESSION & SOUMISSIONS
+// ══════════════════════════════════════════════════════════════
+
+model CompletedExercise {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  exerciseId  String
+  exercise    Exercise  @relation(fields: [exerciseId], references: [id])
+
+  hintsUsed   Int       @default(0)
+  xpEarned    Int
+  solveTime   Int?
+  isFirstBlood Boolean  @default(false)
+
+  completedAt DateTime  @default(now())
+
+  @@unique([userId, exerciseId])
+}
+
+model Submission {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  exerciseId  String
+  exercise    Exercise  @relation(fields: [exerciseId], references: [id])
+
+  flag        String
+  isCorrect   Boolean
+
+  submittedAt DateTime  @default(now())
+}
+
+// ══════════════════════════════════════════════════════════════
+// GAMIFICATION - BADGES
+// ══════════════════════════════════════════════════════════════
+
+model Badge {
+  id          String      @id @default(uuid())
+  slug        String      @unique
+  name        String
+  description String
+  iconUrl     String      @default("/badges/default.svg")
+  category    String      // MODULE, ACHIEVEMENT, STREAK, SKILL
+  rarity      String      // COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
+
+  // Conditions (JSON)
+  condition   String      @default("{}")
+
+  xpBonus     Int         @default(0)
+
+  users       UserBadge[]
+
+  createdAt   DateTime    @default(now())
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  badgeId   String
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+
+  unlockedAt DateTime @default(now())
+
+  @@unique([userId, badgeId])
+}
