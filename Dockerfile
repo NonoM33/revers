@@ -12,7 +12,7 @@ RUN npx prisma generate
 
 # Copy source and build
 COPY . .
-RUN npm run build
+RUN rm -f .env .env.* && npm run build
 
 # Initialize database with seed data during build
 RUN mkdir -p /app/data
