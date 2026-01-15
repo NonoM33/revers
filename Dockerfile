@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
@@ -22,13 +22,15 @@ RUN npx tsx prisma/seed.ts
 RUN npx tsx prisma/add-lessons.ts
 
 # Production image
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 
 WORKDIR /app
 
+# Install OpenSSL for Prisma
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 sveltekit
+RUN groupadd -r -g 1001 nodejs && useradd -r -u 1001 -g nodejs sveltekit
 
 # Copy built application and pre-seeded database
 COPY --from=builder /app/build ./build
