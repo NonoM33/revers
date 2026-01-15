@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Unlock, ArrowLeft } from 'lucide-svelte';
 
-  let { data } = $props();
+  let { form } = $props();
 </script>
 
 <div class="min-h-screen flex items-center justify-center px-4 py-12">
@@ -22,13 +22,13 @@
         Connexion
       </h1>
 
-      {#if data.error}
+      {#if form?.error}
         <div class="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-6">
-          {data.error}
+          {form.error}
         </div>
       {/if}
 
-      <form method="POST" action="/api/auth/login">
+      <form method="POST">
         <div class="space-y-4">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
