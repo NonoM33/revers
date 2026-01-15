@@ -1,0 +1,24 @@
+# Environment files (use Docker ENV instead)
+.env
+.env.*
+
+# Development files
+node_modules
+.git
+.gitignore
+
+# Build artifacts
+build
+.svelte-kit
+
+# Test files
+*.test.ts
+test-*.ts
+screenshot-*.png
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
