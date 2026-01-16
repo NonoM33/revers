@@ -389,3 +389,165 @@ body {
   border-color: var(--color-dark-600);
   margin: 2rem 0;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   CALLOUT BOXES - Style OpenClassrooms
+   ══════════════════════════════════════════════════════════════ */
+
+.callout {
+  border-radius: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid;
+}
+
+.callout-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.callout-icon {
+  font-size: 1.25rem;
+}
+
+.callout-content {
+  color: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.callout-content p:first-child {
+  margin-top: 0;
+}
+
+.callout-content p:last-child {
+  margin-bottom: 0;
+}
+
+.callout-content code {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Info callout - Blue */
+.callout-info {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+  color: #bfdbfe;
+}
+
+.callout-info .callout-title {
+  color: #60a5fa;
+}
+
+/* Tip callout - Green */
+.callout-tip {
+  background-color: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
+
+.callout-tip .callout-title {
+  color: #4ade80;
+}
+
+/* Warning callout - Orange */
+.callout-warning {
+  background-color: rgba(249, 115, 22, 0.15);
+  border-color: #f97316;
+  color: #fed7aa;
+}
+
+.callout-warning .callout-title {
+  color: #fb923c;
+}
+
+/* Remember callout - Purple */
+.callout-remember {
+  background-color: rgba(168, 85, 247, 0.15);
+  border-color: #a855f7;
+  color: #e9d5ff;
+}
+
+.callout-remember .callout-title {
+  color: #c084fc;
+}
+
+/* Example callout - Cyan */
+.callout-example {
+  background-color: rgba(0, 212, 255, 0.15);
+  border-color: var(--color-neon-cyan);
+  color: #cffafe;
+}
+
+.callout-example .callout-title {
+  color: var(--color-neon-cyan);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LESSON STRUCTURE SECTIONS
+   ══════════════════════════════════════════════════════════════ */
+
+.lesson-objectives {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.lesson-objectives h2 {
+  color: var(--color-neon-cyan) !important;
+  margin-top: 0 !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.lesson-objectives ul {
+  margin-bottom: 0;
+}
+
+.lesson-objectives li {
+  color: #a5f3fc;
+}
+
+.lesson-prerequisites {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.lesson-prerequisites h2 {
+  color: #c084fc !important;
+  margin-top: 0 !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.lesson-prerequisites ul {
+  margin-bottom: 0;
+}
+
+.lesson-prerequisites li {
+  color: #e9d5ff;
+}
+
+.lesson-summary {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.lesson-summary h2 {
+  color: var(--color-neon-green) !important;
+  margin-top: 0 !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}

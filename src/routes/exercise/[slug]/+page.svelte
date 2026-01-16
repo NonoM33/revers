@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { getDifficultyStars } from '$lib/utils/xp';
-  import { marked } from 'marked';
+  import { parseMarkdown } from '$lib/utils/markdown';
   import { ChevronLeft, Check, Lock, Download, Apple, Cpu, Lightbulb, Flag, PartyPopper, Loader2, ArrowRight, BookOpen, Target, ChevronRight } from 'lucide-svelte';
 
   let { data, form } = $props();
@@ -24,7 +24,7 @@
   }
 
   // Parse markdown for theory
-  let theoryHtml = $derived(exercise.theory ? marked(exercise.theory) : '');
+  let theoryHtml = $derived(exercise.theory ? parseMarkdown(exercise.theory) : '');
 </script>
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
